@@ -5,12 +5,12 @@ import BurgerIngredient from './BurgerIngredients/BurgerIngredient/BurgerIngredi
 
 const burger = props => {
     
-    let transformedIngredients = Object.keys(props.ingredients).map( igkey => {
-        return [...Array(props.ingredients[igkey])].map( (_,i) => {
-            // console.log('Ingredient : ' + igkey , " Ingredient Index : " + (igkey+i));
-            return  <BurgerIngredient key={igkey + i} type={igkey}/>
-        } )
-    }).reduce( ( arr ,v ) => arr.concat(v), [] );
+    let transformedIngredients = (
+        Object.keys(props.ingredients).filter( i => props.ingredients[i] >=0 )
+        .map( igkey => [...Array(props.ingredients[igkey])]
+            .map( (_,i) => <BurgerIngredient key={igkey + i} type={igkey}/> )
+            ).reduce( ( arr ,v ) => arr.concat(v), [] )
+    );
 
     if(transformedIngredients.length === 0){
         transformedIngredients = <p>Start! Adding Ingredients</p>

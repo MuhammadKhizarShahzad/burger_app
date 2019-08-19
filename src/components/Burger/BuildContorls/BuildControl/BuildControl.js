@@ -5,10 +5,14 @@ import CSS from './BuildControl.module.css';
 const buildControl = props => {
     return (
         <div className={CSS.BuildControl}>
-            <div>Show{props.lebel}</div>
-            <button>Less</button>
-            <button>More</button>
-        </div>
+            <div className={CSS.Label}>{props.label}</div>
+            <button 
+                onClick={props.removeIngredient}
+                className={CSS.Less} >Less</button>
+            <button 
+                onClick={props.AddIngredient}
+                className={CSS.More} >More</button>
+        </div> 
     );
 };
 

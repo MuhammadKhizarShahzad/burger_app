@@ -12,12 +12,16 @@ const controls = [
 
 const buildContorls = props => (
     <div className={CSS.BuildControls}>
-        {controls.map(ctr => (
-            <BuildControl  
+        <p><b>Total Pirce : {props.totalPrice.toFixed(2)}</b></p>
+        {controls.map(ctr => {
+            props.disabledInfo[ctr.type] = props.disabledInfo[ctr.type] <= 0; 
+            return <BuildControl
+                disabledInfo = { props.disabledInfo[ctr.type] }
                 AddIngredient={()=> props.AddIngredient(ctr.type)}
                 removeIngredient={() => props.removeIngredient(ctr.type)}
                 key={ctr.label} label={ctr.label}/>
-        ))}
+        })}
+        <button className={CSS.OrderButton} disabled={!props.pruchase}>ORDER NOW</button>
     </div>
 );
 

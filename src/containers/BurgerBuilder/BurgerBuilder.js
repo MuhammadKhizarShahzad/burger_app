@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger';
 import BuidControls from '../../components/Burger/BuildContorls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
+import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 const INGREDIENT_PRICES = {
     salad: 10,
@@ -22,7 +23,8 @@ class BurgerBuilder extends React.Component{
             meat: 0 
         },
         totalPrice: 20,
-        purchasable: false
+        purchasable: false,
+        modalShow: false
     };
 
     updatePurchaseState(ingredients){
@@ -65,15 +67,41 @@ class BurgerBuilder extends React.Component{
         this.updatePurchaseState( copyIngredients );
     };
 
+    modalShowHandler= () => this.setState({modalShow: true});
+
+    purchaseCancelHandler = () => this.setState({modalShow: false});
+
+    purchaseContinueHandler = () => alert("This Module Will Add SOON!!!");
+
+    componentDidUpdate(){
+        // console.log("Modal Show :",this.state.modalShow);
+    }
+
     render(){
         const disabledInfo = { ...this.state.ingredients };
+        // let modal=null;
+        // if(this.state.modalShow){
+        //     modal=(
+        //         <Modal show = { this.state.modalShow }>
+        //             <OrderSummary ingredients={this.state.ingredients}/>
+        //         </Modal>
+        //     );
+        // }
         return (
             <>
-                <Modal>
-                    <OrderSummary ingredients={this.state.ingredients}/>
+                <Modal show = { this.state.modalShow } >
+                    <OrderSummary 
+                        totalPrice={ this.state.totalPrice }
+                        pucrchaseCancel={this.purchaseCancelHandler}
+                        PurchaseContinue={this.purchaseContinueHandler}
+                        ingredients={this.state.ingredients}/>
                 </Modal>
+                <Backdrop 
+                    pucrchaseCancel={this.purchaseCancelHandler}
+                    show={this.state.modalShow}/>
                 <Burger ingredients = { this.state.ingredients }/>
                 <BuidControls
+                    modalShow={this.modalShowHandler}
                     pruchase = { this.state.purchasable }
                     totalPrice = { this.state.totalPrice }
                     disabledInfo={ disabledInfo }

@@ -1,10 +1,16 @@
 import React from 'react';
 
+import Button from '../UI/Button/Button';
+
 const orderSummary = props => {
     const summary = (
         Object.keys(props.ingredients)
         .map( ( igkey, i ) => (
-                <li key={ igkey +i }>{igkey + " : " + props.ingredients[igkey]}</li>
+                <li key={ igkey +i } >
+                    <span style={{textTransform: 'capitalize'}}>
+                        <b>{igkey + " : " + props.ingredients[igkey]}</b>
+                    </span>
+                </li>
             ) 
         )
     );
@@ -16,9 +22,13 @@ const orderSummary = props => {
             <ul>
                 {summary}
             </ul>
-
-            <button>Check Out</button>
-            <button>Cancel</button>
+            <p><strong>Total Price : { props.totalPrice.toFixed(2) }</strong></p>
+            <p>Continue To Checkout?</p>
+            <Button 
+                className="Danger"
+                clicked={props.pucrchaseCancel}>CANCEL</Button>
+            <Button className="Success"
+                clicked={props.PurchaseContinue}>CONTINUE</Button>
         </>
     );
 };

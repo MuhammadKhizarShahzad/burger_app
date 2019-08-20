@@ -9,7 +9,7 @@
     left: 10%;
     top: 30%;
     box-sizing: border-box;
-    transition: all 1.3s ease-out;
+    transition: all 0.6s ease-out;
 }
 
 .Modal:not(:disabled) {

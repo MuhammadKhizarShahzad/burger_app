@@ -21,7 +21,10 @@ const buildContorls = props => (
                 removeIngredient={() => props.removeIngredient(ctr.type)}
                 key={ctr.label} label={ctr.label}/>
         })}
-        <button className={CSS.OrderButton} disabled={!props.pruchase}>ORDER NOW</button>
+        <button
+            onClick={props.modalShow} 
+            className={CSS.OrderButton} 
+            disabled={!props.pruchase} > ORDER NOW </button>
     </div>
 );
 

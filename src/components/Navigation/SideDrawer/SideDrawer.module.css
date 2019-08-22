@@ -9,23 +9,22 @@
     background-color: white;
     padding: 32px 16px;
     box-sizing: border-box;
-    transition: transform 0.3s ease-out;
+    transition: transform 0.6s ease-in-out;
 }
 
-@media all and  (min-width: 500px){
+@media (min-width: 500px){
     .SideDrawer{
+        display: none;
+    }
+    .BackDropMobileOnly{
         display: none;
     }
 }
 
-.Open{
-    transform: translateX(0);
-    opacity: 1;
-}
-.Close{
-    transform: translateX(-100%);
-    opacity: 0;
-}
+.Open { transform: translateX(0); }
+
+.Close { transform: translateX(-100%); }
+
 .Logo{
     height: 11%;
     margin-bottom: 32px;

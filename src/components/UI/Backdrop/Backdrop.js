@@ -6,7 +6,7 @@ const backdrop = props => (
     props.show ? 
         <div 
             className={CSS.Backdrop}
-            onClick={props.pucrchaseCancel}></div> 
+            onClick={props.clicked}></div> 
     : null
 )
 

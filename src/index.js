@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// import Axios from 'axios';
+
+// Axios.defaults.baseURL = "https://burger-app-e4073.firebaseio.com/";
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

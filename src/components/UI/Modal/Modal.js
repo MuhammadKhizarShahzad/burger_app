@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import CSS from './Modal.module.css';
-
+import Backdrop from '../Backdrop/Backdrop';
 
 class Modal extends Component {
 
@@ -13,6 +13,10 @@ class Modal extends Component {
 
     render() {
         return (
+            <>
+            <Backdrop 
+                    clicked={this.props.clicked}
+                    show={this.props.show}/>
             <div className={CSS.Modal}
                 style={{
                     transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
@@ -21,6 +25,7 @@ class Modal extends Component {
 
                 {this.props.children}
             </div>
+            </>
         );
     }
 }

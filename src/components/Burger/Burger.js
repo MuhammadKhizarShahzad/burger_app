@@ -17,7 +17,7 @@ const burger = props => {
     }
     
     return(
-        <div className={CSS.Burger}>
+        <div className={CSS.Burger} style={{height: props.height}}>
             <BurgerIngredient type="bread-top"/>
             {transformedIngredients}
             <BurgerIngredient type="bread-bottom"/>

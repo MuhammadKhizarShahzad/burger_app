@@ -21,37 +21,37 @@ class BurgerBuilder extends React.Component{
         ingredients :null,
         totalPrice: 20,
         purchasable: false,
-        modalShow: false,
-        loading: false,
         ingerr: false
     };
 
     componentDidMount(){
+        let sumPrice = this.state.totalPrice;
         this.setState({loading: true});
         Axios.get('/ingredients.json')
         .then(res => {
-            this.setState({ingredients: res.data, loading: false});
+            Object.keys(res.data)
+            .map( igkey =>  sumPrice += res.data[igkey] * INGREDIENT_PRICES[igkey] )
+            this.setState({ingredients: res.data, loading: false, totalPrice: sumPrice});
             this.updatePurchaseState(this.state.ingredients);
         }).catch(err => this.setState({ingerr: true}));
     }
 
-    updatePurchaseState(ingredients){
+    updatePurchaseState( ingredients ){
         const sum = (
             Object.keys(ingredients)
             .map( igkey => ingredients[igkey] )
             .reduce( ( s, c ) => s+c , 0 )
         );
-        this.setState( ( prevState, props )  => prevState.purchasable = sum > 0 );
+        this.setState( { purchasable: sum > 0 } );
     }
 
     addIngredientHandler = (type) =>{
         const updatedCount = this.state.ingredients[type] + 1;
         const copyIngredients = { ...this.state.ingredients };
         copyIngredients[type] = updatedCount;
-
         const UpdatePrice = this.state.totalPrice + INGREDIENT_PRICES[type];
 
-        this.setState({ingredients: copyIngredients, totalPrice: UpdatePrice});
+        this.setState({ ingredients: copyIngredients, totalPrice: UpdatePrice });
         this.updatePurchaseState( copyIngredients );
     };
 
@@ -68,7 +68,7 @@ class BurgerBuilder extends React.Component{
 
         this.setState((prevState, props)=>{
             return(
-                prevState.ingredients = copyIngredients, 
+                prevState.ingredients = copyIngredients,
                 prevState.totalPrice = UpdatePrice
             )
         });
@@ -80,28 +80,21 @@ class BurgerBuilder extends React.Component{
     purchaseCancelHandler = () => this.setState({modalShow: false});
 
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: "MKS",
-                address:{
-                    street: " Street No. 5",
-                    country: 'Pakistan',
-                    zipcode: '51010',
-                },
-                email: 'MKS@gmail.com'
-            },
-            deliveryMethod: 'fastet'
+        const queryparam = [];
+        let i = null;
+        for( i in this.state.ingredients){
+            queryparam.push(encodeURIComponent(i) + '=' +  encodeURIComponent(this.state.ingredients[i]) );
         }
-        Axios.post('/orders.json',order)
-        .then( res => this.setState({modalShow: false, loading: false}))
-        .catch(err => this.setState({modalShow: false, loading: false}));
+        queryparam.push(encodeURIComponent("TotalPrice") + '=' + encodeURIComponent(this.state.totalPrice));
+        this.props.history.push('/checkout?'+ queryparam.join('&'));
     };
 
     componentDidUpdate(){
         // console.log("Modal Show :",this.state.modalShow);
+    }
+
+    componentWillUnmount(){
+        console.log("Burger Build Unmounted");
     }
 
     render(){

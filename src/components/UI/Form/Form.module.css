@@ -1,0 +1,26 @@
+.Form {
+    width: 80%;
+    margin: 5px auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.Form .Label{
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+.Form .FormElements{
+    outline: none;
+    background-color: white;
+    border: 1px solid #ccc;
+    font: inherit;
+    padding: 5px 8px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Form .FormElements:focus{
+    outline: none;
+    background-color: #ccc;
+}
